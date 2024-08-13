@@ -1,0 +1,49 @@
+{% extends 'basic.html' %} 
+{% block title %} Blog{% endblock title %}
+
+{% block body %} 
+{% load static %}
+<section id="services" class="services">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Bienvenue au FADN</h2>
+            <div class="col-lg-4 col-md-6 col-xl-4 col-12 icon-box" data-aos="fade-up" style="">
+                 <form class="d-flex input-group w-auto form-inline" action="{% url 'search'%}">
+                     <input type="search" class="form-control " placeholder="Recherche" aria-label="Search" name="publication"/>
+                 </form>
+            </div>
+        </div>
+
+        <div class="row">
+
+{% for post in posts reversed %}
+
+          <div class="col-lg-4 col-md-6 col-xl-4 col-12 icon-box" data-aos="fade-up">
+
+            <div class="col-lg-12" data-aos="fade-right">
+            <a href="{% url 'detail' post.id %}"><img src="{{post.img.url}}" class="img-fluid" alt="no-image" ></a>
+          </div>
+          <br>
+
+            <!--<div class="icon"><i class="bi bi-briefcase"></i></div>-->
+               <div class="section-title">
+                   <a href="{% url 'detail' post.id %}"><h2 style="font-size:20px">{{post.title}}</h2></a>
+                   <p class="description">{{post.description|truncatewords:20| safe}}</p> <br>
+                   <h6>Publié par : <b>{{post.authname}}</b> </h6>
+                   <p>Publié il y a : <b>{{post.timeStamp|timesince}} </b></p>
+                   <a href="{% url 'detail' post.id %}" class="btn btn-primary" data-mdb-ripple-init style="margin-top:10px">Lire la suite</a>
+               </div>
+          </div>
+
+{% endfor %}
+
+
+         
+         
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+{% endblock body %}
+

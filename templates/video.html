@@ -1,0 +1,54 @@
+{% extends 'basic.html' %} 
+{% block title %} Blog{% endblock title %}
+
+{% block body %} 
+{% load static %}
+<section id="services" class="services">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Les œuvres de la FADN</h2>
+            <div class="col-lg-4 col-md-6 col-xl-4 col-12 icon-box" data-aos="fade-up" style="">
+                 <form class="d-flex input-group w-auto form-inline" action="{% url 'search_videos' %}">
+                     <input type="search" class="form-control " placeholder="Recherche des œuvres de la FADN " aria-label="Search" name="publiee"/>
+                 </form>
+            </div>
+        </div>
+
+        <div class="row">
+
+
+
+          <div class="col-lg-4 col-md-6 col-xl-8 col-12 icon-box " data-aos="fade-up">
+
+            <div class="col-lg-12" data-aos="fade-right">
+                {% for x in video %}
+                    <video class="img-fluid" controls="controls" >
+                        <source src="{{x.video.url}}" type="video/mp4" alt="no-image"/> votre navigateur ne supporte pas la balise video
+                    </video>
+                 <div class="section-title">
+                   <a href=""><h2 style="font-size:20px">{{x.title}}</h2></a>
+                   <p class="description">{{x.description|truncatewords:20| safe}}</p> <br>
+                   <h6>Publié par : <b>{{x.name|safe}}</b> </h6>
+                   <p>Publié il y a : <b>{{x.heure|timesince}} </b></p>
+               </div>
+                {% endfor %}
+          </div>
+          <br>
+
+            <!--<div class="icon"><i class="bi bi-briefcase"></i></div>-->
+               <div class="section-title">
+
+               </div>
+          </div>
+
+
+
+
+         
+         
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+{% endblock body %}

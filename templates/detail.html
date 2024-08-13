@@ -1,0 +1,106 @@
+{% extends 'basic.html' %}
+{% block title %} Publication {% endblock title %}
+
+{% block body %} 
+{% load static %}
+<section id="about" class="about">
+    <div class="container">
+        <div class="col-lg-4 col-md-6 col-xl-4 col-12 icon-box" data-aos="fade-up" style="">
+            <div class="" style="margin-bottom:10px">
+                <a href="/blog" class="btn btn-primary" data-mdb-ripple-init style="">Voir les publications</a>
+            </div>
+            <form class="d-flex input-group w-auto form-inline" action="{% url 'search'%}">
+                <input type="search" class="form-control " placeholder="Recherche" aria-label="Search" name="publication"/>
+            </form>
+        </div>
+        <br>
+        <div class="row" data-aos="fade-up">
+            <div class="col-lg-8 col-md-8 icon-box">
+
+                <div class="section-title">
+                    <h2>Détail de la publication</h2>
+                </div>
+
+                <div class="col-lg-12 " data-aos="fade-right">
+                    <a href="{% url 'detail' post.id %}">
+                        <img src="{{post.img.url}}" class="img-fluid" alt="no-image " >
+                    </a> <br>
+                    <div class="section-title">
+                        <h2 style="font-size:28px">{{post.title}}</h2>
+                        <p style="text-align: justify">{{post.description|safe}}</p> <br>
+                        <p>Publié par : <b>{{post.authname}}</b>, le <b>{{post.timeStamp}} </b></p>
+                        <hr>
+
+                        Commentaire ({{num_comments}})
+                        <hr>
+                        <ul>
+                            {% for commentaire in post.comments.all %}
+
+                                <li><strong>{{commentaire.commenter_name}}</strong>
+                                <p style="text-align: justify">{{commentaire.comment_body}}</p>
+                                <p><small>{{commentaire.date_added}}</small></p></li>
+
+                                 {% empty %}
+                        <li>Aucun commentaire</li>
+                            {% endfor %}
+                        </ul>
+
+                                    {% if user.username  %}
+                        <h2 style="font-size:20px">Ajouter un commentaire</h2>
+                                    <p><a class="btn btn-primary" href="{% url 'add-comment' post.id %}" style="margin-bottom:10px">Ajouter un commentaire</a></p>
+                                    <!--<p><a class="btn btn-danger" href="{% url 'delete-comment' post.id %}" style="margin-bottom:10px">Supprimer un commentaire</a></p>-->
+
+                                    {% endif %}
+
+                        {% if not user.username %}
+                        <br><p>Connectez-vous pour commenter.<a href="/auth/login/">  Ici...</a></p>
+                                 {% else %}
+
+
+
+                        {% endif %}
+
+            <!--<p><a class="btn btn-primary" href="{% url 'add-comment' post.id %}" style="margin-bottom:10px">Ajouter un commentaire</a></p>-->
+
+                        <br>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 icon-box section-title">
+                <div class="section-title">
+                    <h2 style="font-size:20px">Les publications en relations</h2>
+
+                    <div class="row">
+
+                        {% for prt in per %}
+                            {% if not prt.id == post.id %}
+                                <div class="col-md-7 mb-1">
+                                    <a href="{% url 'detail' prt.id %}"><img src="{{prt.img.url}}" alt="" style="max-width:200px"></a>
+                                </div>
+                                <div class="col-4">
+                                    <strong>{{prt.title}} </strong><br>
+                                    {{prt.description |safe | truncatewords:10}}
+                                </div>
+                        <br>
+
+
+
+
+                               {% endif %}
+
+
+                        {% endfor %}
+                        <br>
+                        <p>La publication s'est limité. <a href="/blog"> <i class="bi bi-chevron-right">Voir plus ...</i></a></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section><!-- End About Section -->
+
+
+{% endblock body %}

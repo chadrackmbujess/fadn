@@ -1,0 +1,46 @@
+{% extends 'basic.html' %}
+{% block title %} FADN {% endblock title %}
+{% block hero %}
+
+  <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+
+
+    <div class="hero-container" data-aos="fade-in">
+{% if not request.user.is_authenticated %}
+      <div style="margin-left:1155px; margin-bottom:180px">
+
+        <p><a class="btn btn-primary" href="/auth/login/" style="margin-bottom:10px">Se connecter</a></p>
+      </div>
+      <div style="margin-left:455px; margin-bottom:200px" >
+        <h1 style="font-size:70px">FADN</h1>
+        <p><span class="typed" style="font-size:23px" data-typed-items="Fondation Andy Disu Nsangu, Une vie meilleure pour tous"></span></p>
+      </div>
+      {% else %}
+
+      <div style="margin-left:1155px; margin-bottom:180px">
+
+        <p><a class="btn btn-danger" href="/auth/logout/" style="margin-bottom:10px">Se déconnecter</a></p>
+      </div>
+        <div style="margin-left:455px; margin-bottom:200px" >
+        <h1 style="font-size:70px">FADN</h1>
+        <p><span class="typed" style="font-size:23px" data-typed-items="Fondation Andy Disu Nsangu, Une vie meilleure pour tous"></span></p>
+      </div>
+      {% endif %}
+
+
+
+    </div>
+  </section>
+
+{% endblock hero %}
+{% block body %}
+
+{% for message in messages %}
+
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong>{{message}} </strong> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+{% endblock body %}
